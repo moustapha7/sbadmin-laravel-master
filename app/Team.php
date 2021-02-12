@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $created_at
  * @property string $updated_at
  * @property Project[] $projects
- * @property Employe[] $employes
+ * @property User[] $users
  */
 class Team extends Model
 {
@@ -35,16 +35,8 @@ class Team extends Model
         return $this->hasMany('App\Project');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function employes()
-    {
-        return $this->hasMany('App\Employe');
-    }
-
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User','user_id');
     }
 }

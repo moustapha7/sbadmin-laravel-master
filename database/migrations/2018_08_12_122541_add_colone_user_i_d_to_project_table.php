@@ -17,7 +17,7 @@ class AddColoneUserIDToProjectTable extends Migration
             $table->integer('user_id')->unsigned()->index()->nullable();
            // $table->integer('project_id')->unsigned()->index()->nullable();
             // Foerign key Constraint
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
             //$table->foreign('project_id')->references('id')->on('project')->onDelete('cascade');
         });
     }

@@ -31,19 +31,19 @@ class Comment extends Model
     protected $fillable = ['user_id', 'project_id', 'task_id', 'content', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function user()
+    public function users()
     {
-        return $this->belongsTo('App\User');
+        return $this->hasMany('App\User','user_id');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function project()
     {
-        return $this->belongsTo('App\Project');
+        return $this->hasMany('App\Project');
     }
 
     /**
@@ -51,6 +51,6 @@ class Comment extends Model
      */
     public function task()
     {
-        return $this->belongsTo('App\Task');
+        return $this->hasMany('App\Task');
     }
 }

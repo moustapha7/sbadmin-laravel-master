@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
- * @property int $employe_id
+ * @property int $user_id
  * @property int $project_id
  * @property string $name
  * @property string $description
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $status
  * @property string $created_at
  * @property string $updated_at
- * @property Employe $employe
+ * @property User $user
  * @property Project $project
  * @property Comment[] $comments
  */
@@ -34,14 +34,15 @@ class Task extends Model
     /**
      * @var array
      */
-    protected $fillable = ['employe_id', 'project_id', 'name', 'description', 'comment', 'requestedDate', 'estcompletedDate', 'assignedDate', 'estHour', 'status', 'created_at', 'updated_at'];
+    protected $fillable = ['user_id', 'project_id', 'name', 'description', 'comment', 'requestedDate', 'estcompletedDate', 'assignedDate', 'estHour', 'status', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function employe()
+    public function users()
     {
-        return $this->belongsTo('App\Employe');
+       // return $this->belongsTo('App\User','user_id');
+        return $this->belongsToMany(User::class,'user_id');
     }
 
     /**
@@ -49,7 +50,7 @@ class Task extends Model
      */
     public function project()
     {
-        return $this->belongsTo('App\Project');
+        return $this->belongsTo('App\Project','project_id');
     }
 
     /**

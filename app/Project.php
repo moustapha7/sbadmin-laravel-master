@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Team $team
  * @property Task[] $tasks
  * @property Comment[] $comments
- * @property EmployeProject[] $employeProjects
+ * @property UserProject[] $userProjects
  */
 class Project extends Model
 {
@@ -56,13 +56,13 @@ class Project extends Model
      */
     public function projectType()
     {
-        return $this->belongsTo('App\ProjectType', '"projectType_id"');
-    }
-
-    public function type()
-    {
         return $this->belongsTo('App\ProjectType', 'projectType_id');
     }
+
+   /* public function type()
+    {
+        return $this->belongsTo('App\ProjectType', 'projectType_id');
+    }*/
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -83,9 +83,9 @@ class Project extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function tasks()
+    public function task()
     {
-        return $this->hasMany('App\Task');
+        return $this->belongsTo('App\Task');
     }
 
     /**
@@ -99,18 +99,20 @@ class Project extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function employeProjects()
+    public function userProjects()
     {
-        return $this->hasMany('App\EmployeProject');
+        return $this->hasMany('App\UserProject');
     }
 
-    public function employeProject()
+    /*public function UserProject()
     {
-        return $this->belongsToMany('App\EmployeProject', 'employe_project', 'project_id','employe_id')->withTimestamps();
-    }
+        return $this->belongsToMany('App\UserProject', 'user_project', 'project_id','user_id')->withTimestamps();
+    }*/
 
-    public function employes()
+   /* public function users()
     {
-        return $this->belongsToMany('App\Employe', 'employe_project', 'project_id','employe_id')->withPivot(['comment','type','assignedDate','reassignedDate','employeStatus'])->withTimestamps();
-    }
+        return $this->belongsToMany('App\User', 'user_project', 'project_id','user_id')->withPivot(['comment','type','assignedDate','reassignedDate','userStatus'])->withTimestamps();
+    }*/
+
+
 }

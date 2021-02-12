@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property Project[] $projects
  * @property Comment[] $comments
  * @property Team[] $teams
+ * @property Team $team
+ * @property Task[] $tasks
  */
 class User extends Authenticatable
 {
@@ -29,23 +31,45 @@ class User extends Authenticatable
      */
     protected $fillable = ['first_name','name','phone','position', 'email','team_id', 'password','created_at', 'updated_at'];
 
+
+    /**
+     * The table associated with the model.
+     * 
+     * @var string
+     */
+    protected $table = 'user';
+
+
     protected $hidden = [
         'password', 'remember_token',
     ];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function projects()
+   /* public function projects()
     {
         return $this->hasMany('App\Project');
+    }*/
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'user_project', 'user_id','project_id')->withTimestamps();
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function tasks()
+    {
+        return $this->belongsToMany(User::class,'user_id','task_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function comments()
     {
-        return $this->hasMany('App\Comment');
+        return $this->belongsTo('App\Comment');
     }
 
 
@@ -56,4 +80,12 @@ class User extends Authenticatable
     public function teams(){
         return $this->hasMany('App\Team');
     }
+
+    public function userProject()
+    {
+        return $this->belongsToMany(UserProject::class, 'user_project', 'project_id','user_id')->withTimestamps();
+    }
+
+    
+
 }
